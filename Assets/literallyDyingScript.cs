@@ -69,6 +69,7 @@ public class literallyDyingScript : MonoBehaviour
                 Needy.HandlePass();
                 _isSolved = true;
                 GetComponent<KMSelectable>().AddInteractionPunch();
+                Activated = 54;
                 emojiSprite = 0;
                 EmojiShow.GetComponent<MeshRenderer>().material = Emoji[emojiSprite];
             }
@@ -81,7 +82,6 @@ public class literallyDyingScript : MonoBehaviour
         {
             emojiSprite = 2;
             EmojiShow.GetComponent<MeshRenderer>().material = Emoji[emojiSprite];
-            Needy.HandlePass();
             _isSolved = true;
             GetComponent<KMSelectable>().AddInteractionPunch();
         }
@@ -142,11 +142,26 @@ public class literallyDyingScript : MonoBehaviour
         string[] Tears = command.Trim().ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         if (Tears[0] == "heal")
         {
-            Bandage.OnInteract();
             yield return null;
+            Bandage.OnInteract();
         }
         else
         {
+            yield return null;
+        }
+    }
+
+    void TwitchHandleForcedSolve()
+    {
+        StartCoroutine(HandleSolve());
+    }
+
+    IEnumerator HandleSolve()
+    {
+        while (true)
+        {
+            if (scare == 0 && Activated <= 1)
+                Bandage.OnInteract();
             yield return null;
         }
     }

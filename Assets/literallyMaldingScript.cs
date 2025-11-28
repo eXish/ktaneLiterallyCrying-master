@@ -81,6 +81,7 @@ public class literallyMaldingScript : MonoBehaviour {
     {
         GetComponent<KMNeedyModule>().OnStrike();
         emojiSprite = 2;
+        Activated = 54;
         EmojiShow.GetComponent<MeshRenderer>().material = Emoji[emojiSprite];
         audio.PlaySoundAtTransform("steam", transform);
         Needy.HandlePass();
@@ -95,11 +96,26 @@ public class literallyMaldingScript : MonoBehaviour {
         string[] Tears = command.Trim().ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         if (Tears[0] == "fez")
         {
-            Hat.OnInteract();
             yield return null;
+            Hat.OnInteract();
         }
         else
         {
+            yield return null;
+        }
+    }
+
+    void TwitchHandleForcedSolve()
+    {
+        StartCoroutine(HandleSolve());
+    }
+
+    IEnumerator HandleSolve()
+    {
+        while (true)
+        {
+            if (Activated <= 1)
+                Hat.OnInteract();
             yield return null;
         }
     }

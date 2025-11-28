@@ -98,6 +98,7 @@ public class literallyLaughingScript : MonoBehaviour
     {
         GetComponent<KMNeedyModule>().OnStrike();
         emojiSprite = 2;
+        Activated = 54;
         EmojiShow.GetComponent<MeshRenderer>().material = Emoji[emojiSprite];
         Needy.HandlePass();
         _isSolved = true;
@@ -111,11 +112,26 @@ public class literallyLaughingScript : MonoBehaviour
         string[] Tears = command.Trim().ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         if (Tears[0] == "coconut")
         {
-            PlayButton.OnInteract();
             yield return null;
+            PlayButton.OnInteract();
         }
         else
         {
+            yield return null;
+        }
+    }
+
+    void TwitchHandleForcedSolve()
+    {
+        StartCoroutine(HandleSolve());
+    }
+
+    IEnumerator HandleSolve()
+    {
+        while (true)
+        {
+            if (Activated <= 1)
+                PlayButton.OnInteract();
             yield return null;
         }
     }

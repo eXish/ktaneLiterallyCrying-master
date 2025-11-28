@@ -103,6 +103,7 @@ public class literallyDeagingScript : MonoBehaviour
     {
         GetComponent<KMNeedyModule>().OnStrike();
         emojiSprite = 2;
+        Activated = 54;
         EmojiShow.GetComponent<MeshRenderer>().material = Emoji[emojiSprite];
         audio.PlaySoundAtTransform("steam", transform);
         Needy.HandlePass();
@@ -117,11 +118,26 @@ public class literallyDeagingScript : MonoBehaviour
         string[] Tears = command.Trim().ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         if (Tears[0] == "cake")
         {
-            CakeYum.OnInteract();
             yield return null;
+            CakeYum.OnInteract();
         }
         else
         {
+            yield return null;
+        }
+    }
+
+    void TwitchHandleForcedSolve()
+    {
+        StartCoroutine(HandleSolve());
+    }
+
+    IEnumerator HandleSolve()
+    {
+        while (true)
+        {
+            if (Activated <= 1)
+                CakeYum.OnInteract();
             yield return null;
         }
     }

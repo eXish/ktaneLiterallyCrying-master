@@ -234,4 +234,26 @@ public class literallyTauntingScript : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    void TwitchHandleForcedSolve()
+    {
+        StartCoroutine(HandleSolve());
+    }
+
+    IEnumerator HandleSolve()
+    {
+        while (true)
+        {
+            if (!_isSolved)
+            {
+                buttons = new[] { Taunt1, Taunt2, Taunt3, Taunt4, Taunt5 }.Where(i => i.gameObject.activeInHierarchy).ToArray();
+                foreach (var b in buttons)
+                {
+                    b.OnInteract();
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+            yield return null;
+        }
+    }
 }
